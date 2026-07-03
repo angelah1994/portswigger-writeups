@@ -1,63 +1,33 @@
 # PortSwigger Web Security Academy Write-ups
 
-Welcome to my collection of hands-on write-ups from the PortSwigger Web Security Academy.
+This repository contains my write-ups for labs completed on the PortSwigger Web Security Academy. Each write-up documents the methodology, payloads, observations, and mitigation strategies used to identify and exploit common web application vulnerabilities in a controlled lab environment.
 
-This repository documents my journey in learning and practicing web application security through real-world, lab-based exercises. Each write-up provides a detailed walkthrough of the vulnerability, exploitation process, observations, and mitigation techniques.
+## Purpose
 
-The primary objective of this repository is to demonstrate practical penetration testing skills, security analysis, and technical documentation.
+The purpose of this repository is to:
 
----
+- Document my hands-on learning in web application security.
+- Demonstrate practical penetration testing skills.
+- Showcase my technical documentation and reporting abilities.
+- Build a portfolio of completed security labs.
 
-## About Me
-
-Hi, I'm **Angela Wafula**, a cybersecurity professional with a background in Computer Security and Forensics. I have experience in IT support, system administration, and security operations, and I am continuously building my offensive security skills through hands-on labs and Capture The Flag (CTF) challenges.
-
----
-
-## Skills Demonstrated
-
-Throughout these labs, I practice and document skills including:
+## Topics Covered
 
 - SQL Injection
 - Cross-Site Scripting (XSS)
 - Authentication Vulnerabilities
-- Access Control Vulnerabilities
+- Access Control
 - Server-Side Request Forgery (SSRF)
-- XML External Entity (XXE) Injection
+- XML External Entity (XXE)
 - File Upload Vulnerabilities
-- HTTP Request Analysis
-- Burp Suite
-- Web Application Penetration Testing
-- Vulnerability Assessment
-- Technical Documentation
-
----
+- Other PortSwigger Web Security Academy labs
 
 ## Tools Used
 
 - Burp Suite Community Edition
-- Web Browser (Firefox/Chrome)
 - PortSwigger Web Security Academy
-- Developer Tools
+- Web Browser Developer Tools
 - Git & GitHub
-
----
-
-## Repository Structure
-
-```text
-portswigger-writeups/
-│
-├── SQL Injection/
-├── Cross-Site Scripting/
-├── Authentication/
-├── Access Control/
-├── SSRF/
-├── XXE/
-└── File Upload/
-```
-
----
 
 ## Completed Labs
 
@@ -67,30 +37,12 @@ portswigger-writeups/
 
 > This table will be updated as I complete additional labs.
 
----
+## Portfolio
 
-## Learning Objectives
+For more of my cybersecurity projects, certifications, and experience, visit my portfolio:
 
-Through these labs, I aim to:
-
-- Strengthen my web application penetration testing skills.
-- Gain hands-on experience exploiting common web vulnerabilities.
-- Improve my ability to identify, analyze, and document security issues.
-- Build a professional cybersecurity portfolio showcasing practical experience.
-
----
+**Portfolio:** https://angelah1994.github.io/angela-na.github.io/index.html
 
 ## Disclaimer
 
-These write-ups are based on intentionally vulnerable applications provided by the PortSwigger Web Security Academy for educational purposes. All testing was conducted within authorized lab environments.
-
----
-
-## Connect With Me
-
-- **GitHub:** https://github.com/Angelah1994
-- **LinkedIn:** https://www.linkedin.com/in/angela-wafula/
-
----
-
-⭐ Thank you for visiting my repository. Feedback and suggestions are always welcome!
+All write-ups in this repository are based on intentionally vulnerable applications provided by the PortSwigger Web Security Academy. They are intended solely for educational purposes and were performed in authorized lab environments.
