@@ -148,6 +148,9 @@ The administrator account exists.
 
 **Step 5 – Determine Password Length**
 
+<img width="1483" height="593" alt="image" src="https://github.com/user-attachments/assets/5f775eca-ef22-440d-8b65-44e19201a410" />
+
+
 Payload
 ' AND (SELECT username
 FROM users
