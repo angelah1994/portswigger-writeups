@@ -5,16 +5,27 @@ Category: SQL Injection
 Difficulty: Apprentice
 Status: ✅ Solved
 
+
+
 **Table of Contents**
 Overview
+
 Goal of the Lab
+
 Lab Information
+
 Tools Used
+
 Vulnerability Overview
+
 Exploitation Steps
+
 Result
+
 Skills Demonstrated
+
 Mitigation
+
 References
 
 
