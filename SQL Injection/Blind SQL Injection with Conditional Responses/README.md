@@ -118,6 +118,9 @@ This confirmed that the application's behavior depends on the truth value of the
 Payload
 ' AND (SELECT 'x' FROM users LIMIT 1)='x'--
 
+<img width="1496" height="371" alt="image" src="https://github.com/user-attachments/assets/cb8b6f49-3507-4d5a-bf97-995c74201767" />
+
+
 **Explanation**
 
 Verified that the users table exists by checking whether a query against it returns a value.
