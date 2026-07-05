@@ -101,6 +101,9 @@ Payload
 Cookie: session=...
 TrackingId=... ' AND 1=0--
 
+<img width="722" height="51" alt="image" src="https://github.com/user-attachments/assets/635a5433-a012-4065-9fac-3db02330a95d" />
+
+
 **Explanation**
 
 Injected a condition that always evaluates to FALSE.
