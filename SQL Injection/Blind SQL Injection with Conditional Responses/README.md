@@ -132,6 +132,9 @@ The users table exists.
 
 **Step 4 – Confirm the administrator User Exists**
 
+<img width="1468" height="553" alt="image" src="https://github.com/user-attachments/assets/f87a77d2-72c7-4d5e-8edc-c05483fea3f2" />
+
+
 Payload
 ' AND EXISTS(SELECT 1 FROM users WHERE username='administrator')--
 Explanation
