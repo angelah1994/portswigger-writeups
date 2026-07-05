@@ -84,6 +84,9 @@ Payload
 Cookie: session=...
 TrackingId=... ' AND 1=1--
 
+<img width="1247" height="395" alt="image" src="https://github.com/user-attachments/assets/9919676b-ef69-4441-bf22-16bcdbb5dadf" />
+
+
 **Explanation**
 
 
