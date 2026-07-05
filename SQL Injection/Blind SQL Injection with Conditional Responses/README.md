@@ -8,6 +8,7 @@ Status: ✅ Solved
 
 
 **Table of Contents**
+
 Overview
 
 Goal of the Lab
@@ -42,6 +43,7 @@ By exploiting these conditional responses, the administrator's password can be e
 Identify and exploit the blind SQL injection vulnerability in the TrackingId cookie.
 Enumerate the password of the administrator user.
 Log in as the administrator to solve the lab.
+
 **Lab Information**
 
 **Item**	**Value**
