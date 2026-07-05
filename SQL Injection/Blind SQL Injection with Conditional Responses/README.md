@@ -165,6 +165,8 @@ Password length determined to be 20 characters.
 
 
 **Step 6 – Enumerate the Password Using Burp Suite Intruder**
+<img width="1887" height="792" alt="image" src="https://github.com/user-attachments/assets/ffb491aa-4090-4c29-88f1-9d889da9ab4f" />
+
 
 Payload Template
 ' AND (SELECT SUBSTRING(password,1,1)
