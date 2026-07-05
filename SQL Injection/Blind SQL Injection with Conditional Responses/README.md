@@ -16,6 +16,8 @@ Result
 Skills Demonstrated
 Mitigation
 References
+
+
 **Overview**
 
 This write-up demonstrates the exploitation of a Boolean-based Blind SQL Injection vulnerability in a vulnerable web application provided by the PortSwigger Web Security Academy.
