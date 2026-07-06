@@ -77,7 +77,8 @@ To verify that the error was caused by broken SQL syntax rather than some unrela
 
 With the injection point confirmed, I tested the underlying database engine so that the correct syntax could be used for the conditional error payloads.
 
-![Identifying the database](image3.png)
+<img width="1786" height="798" alt="image3" src="https://github.com/user-attachments/assets/fb6f735b-7265-4a5f-8be2-644e688fb757" />
+
 
 **Explanation:** This payload appends a subquery that only produces a database error when the tested condition is true, using a construct compatible with the identified database engine. Observing whether the request produces an error confirms both the database type and that arbitrary conditions can be injected into the query.
 
@@ -89,7 +90,7 @@ With the injection point confirmed, I tested the underlying database engine so t
 
 Next, I tested whether the database contained a table named users, which is commonly used to store account credentials.
 
-![Identifying whether the users table exists](image4.png)
+<img width="1455" height="649" alt="image4" src="https://github.com/user-attachments/assets/63d7d7ac-810b-48e6-b4e7-8b9c2c197c2e" />
 
 **Explanation:** The payload wraps a conditional error subquery around a reference to the users table. If the table exists, the query executes and the injected condition can trigger the error causing branch. If the table does not exist, the query fails for an unrelated reason and the result cannot be trusted.
 
@@ -101,7 +102,8 @@ Next, I tested whether the database contained a table named users, which is comm
 
 To validate the conditional error technique itself, I injected a condition that always evaluates to TRUE.
 
-![Testing a true condition](image5.png)
+<img width="1578" height="813" alt="image5" src="https://github.com/user-attachments/assets/17c4e6a8-64be-40cb-b73f-0be78e487a4c" />
+
 
 **Explanation:** The payload uses a CASE statement so that when the injected condition is true, the query performs an operation that always fails, such as dividing by zero. A true condition should therefore force the database to raise an error.
 
@@ -113,7 +115,8 @@ To validate the conditional error technique itself, I injected a condition that 
 
 I then repeated the test using a condition that always evaluates to FALSE.
 
-![Testing a false condition](image6.png)
+<img width="1836" height="745" alt="image6" src="https://github.com/user-attachments/assets/7780bcf3-dae3-4db0-8d70-25c1e2a933f1" />
+
 
 **Explanation:** When the injected condition is false, the CASE statement skips the error causing branch and the query completes normally, since the error causing operation is never executed.
 
@@ -125,7 +128,8 @@ I then repeated the test using a condition that always evaluates to FALSE.
 
 Using the conditional error technique, I tested whether a user named administrator existed in the users table.
 
-![Verifying the administrator account](image7.png)
+<img width="1535" height="630" alt="image7" src="https://github.com/user-attachments/assets/438b9fde-6226-45f9-8818-4339ff411d40" />
+
 
 **Explanation:** The payload combines the conditional error subquery with a check against the username column, so the error is only triggered if a row with username equal to administrator exists in the users table.
 
@@ -137,9 +141,11 @@ Using the conditional error technique, I tested whether a user named administrat
 
 With the target account confirmed, I used the conditional error technique together with the LENGTH function to determine how many characters are in the administrator's password.
 
-![Determining password length, part 1](image8.png)
+<img width="1474" height="784" alt="image8" src="https://github.com/user-attachments/assets/3d45db45-2cf7-4ce8-9bed-2a6576a24811" />
 
-![Determining password length, part 2](image9.png)
+
+<img width="1501" height="662" alt="image9" src="https://github.com/user-attachments/assets/9cfb8b33-2250-431c-a42f-2f51cc8299b0" />
+
 
 **Explanation:** The payload checks whether the length of the administrator's password is greater than a specified number. If the condition is true, the error causing branch executes and the application returns a 500 error. By testing a range of values, for example greater than 1, greater than 10, and greater than 20, the exact password length can be narrowed down.
 
@@ -151,9 +157,10 @@ With the target account confirmed, I used the conditional error technique togeth
 
 With the password length known, I used Burp Suite Intruder to automate the extraction of each character in the password.
 
-![Burp Intruder extraction, part 1](image10.png)
+<img width="1920" height="951" alt="image10" src="https://github.com/user-attachments/assets/c3985bf1-c940-4f26-9b83-f0c6eb5a5c26" />
 
-![Burp Intruder extraction, part 2](image11.png)
+<img width="1920" height="1080" alt="image11" src="https://github.com/user-attachments/assets/d1acd107-61a8-4432-a9e8-ca4156906d47" />
+
 
 **Explanation:** The payload uses the SUBSTRING function to isolate a single character of the password at a given position, and compares it against a candidate character inside the conditional error CASE statement. If the comparison is true, the request triggers an error; if false, the application responds normally.
 
