@@ -64,7 +64,8 @@ To begin testing the TrackingId cookie for SQL injection, I modified its value b
 
 To verify that the error was caused by broken SQL syntax rather than some unrelated application fault, I appended two single quotes to the TrackingId value instead of one.
 
-![Appending two single quotes](image2.png)
+<img width="1757" height="660" alt="image" src="https://github.com/user-attachments/assets/01126a56-d334-4da2-8109-872422f35068" />
+
 
 **Explanation:** In SQL, two consecutive single quotes inside a string literal are interpreted as an escaped quote character rather than the end of the string. This keeps the overall query syntax valid.
 
