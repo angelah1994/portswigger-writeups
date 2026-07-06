@@ -51,7 +51,7 @@ By repeating this test with different conditions, it becomes possible to confirm
 
 To begin testing the TrackingId cookie for SQL injection, I modified its value by appending a single quote.
 
-![Appending a single quote](images/image1.png)
+![Appending a single quote](image1.png)
 
 **Explanation:** A single unescaped quote breaks the syntax of the underlying SQL query by introducing an unmatched quotation mark. If the cookie value is inserted into the query without proper sanitisation, this will cause the database to reject the malformed statement.
 
@@ -63,7 +63,7 @@ To begin testing the TrackingId cookie for SQL injection, I modified its value b
 
 To verify that the error was caused by broken SQL syntax rather than some unrelated application fault, I appended two single quotes to the TrackingId value instead of one.
 
-![Appending two single quotes](images/image2.png)
+![Appending two single quotes](image2.png)
 
 **Explanation:** In SQL, two consecutive single quotes inside a string literal are interpreted as an escaped quote character rather than the end of the string. This keeps the overall query syntax valid.
 
@@ -75,7 +75,7 @@ To verify that the error was caused by broken SQL syntax rather than some unrela
 
 With the injection point confirmed, I tested the underlying database engine so that the correct syntax could be used for the conditional error payloads.
 
-![Identifying the database](images/image3.png)
+![Identifying the database](image3.png)
 
 **Explanation:** This payload appends a subquery that only produces a database error when the tested condition is true, using a construct compatible with the identified database engine. Observing whether the request produces an error confirms both the database type and that arbitrary conditions can be injected into the query.
 
@@ -87,7 +87,7 @@ With the injection point confirmed, I tested the underlying database engine so t
 
 Next, I tested whether the database contained a table named users, which is commonly used to store account credentials.
 
-![Identifying whether the users table exists](images/image4.png)
+![Identifying whether the users table exists](image4.png)
 
 **Explanation:** The payload wraps a conditional error subquery around a reference to the users table. If the table exists, the query executes and the injected condition can trigger the error causing branch. If the table does not exist, the query fails for an unrelated reason and the result cannot be trusted.
 
@@ -99,7 +99,7 @@ Next, I tested whether the database contained a table named users, which is comm
 
 To validate the conditional error technique itself, I injected a condition that always evaluates to TRUE.
 
-![Testing a true condition](images/image5.png)
+![Testing a true condition](image5.png)
 
 **Explanation:** The payload uses a CASE statement so that when the injected condition is true, the query performs an operation that always fails, such as dividing by zero. A true condition should therefore force the database to raise an error.
 
@@ -111,7 +111,7 @@ To validate the conditional error technique itself, I injected a condition that 
 
 I then repeated the test using a condition that always evaluates to FALSE.
 
-![Testing a false condition](images/image6.png)
+![Testing a false condition](image6.png)
 
 **Explanation:** When the injected condition is false, the CASE statement skips the error causing branch and the query completes normally, since the error causing operation is never executed.
 
@@ -123,7 +123,7 @@ I then repeated the test using a condition that always evaluates to FALSE.
 
 Using the conditional error technique, I tested whether a user named administrator existed in the users table.
 
-![Verifying the administrator account](images/image7.png)
+![Verifying the administrator account](image7.png)
 
 **Explanation:** The payload combines the conditional error subquery with a check against the username column, so the error is only triggered if a row with username equal to administrator exists in the users table.
 
@@ -135,9 +135,9 @@ Using the conditional error technique, I tested whether a user named administrat
 
 With the target account confirmed, I used the conditional error technique together with the LENGTH function to determine how many characters are in the administrator's password.
 
-![Determining password length, part 1](images/image8.png)
+![Determining password length, part 1](image8.png)
 
-![Determining password length, part 2](images/image9.png)
+![Determining password length, part 2](image9.png)
 
 **Explanation:** The payload checks whether the length of the administrator's password is greater than a specified number. If the condition is true, the error causing branch executes and the application returns a 500 error. By testing a range of values, for example greater than 1, greater than 10, and greater than 20, the exact password length can be narrowed down.
 
@@ -149,9 +149,9 @@ With the target account confirmed, I used the conditional error technique togeth
 
 With the password length known, I used Burp Suite Intruder to automate the extraction of each character in the password.
 
-![Burp Intruder extraction, part 1](images/image10.png)
+![Burp Intruder extraction, part 1](image10.png)
 
-![Burp Intruder extraction, part 2](images/image11.png)
+![Burp Intruder extraction, part 2](image11.png)
 
 **Explanation:** The payload uses the SUBSTRING function to isolate a single character of the password at a given position, and compares it against a candidate character inside the conditional error CASE statement. If the comparison is true, the request triggers an error; if false, the application responds normally.
 
