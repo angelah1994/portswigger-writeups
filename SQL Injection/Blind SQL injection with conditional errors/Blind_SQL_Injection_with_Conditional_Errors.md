@@ -51,7 +51,8 @@ By repeating this test with different conditions, it becomes possible to confirm
 
 To begin testing the TrackingId cookie for SQL injection, I modified its value by appending a single quote.
 
-![Appending a single quote](image1.png)
+<img width="1736" height="758" alt="image" src="https://github.com/user-attachments/assets/13d724dc-d867-431c-9dc0-22535846feda" />
+
 
 **Explanation:** A single unescaped quote breaks the syntax of the underlying SQL query by introducing an unmatched quotation mark. If the cookie value is inserted into the query without proper sanitisation, this will cause the database to reject the malformed statement.
 
