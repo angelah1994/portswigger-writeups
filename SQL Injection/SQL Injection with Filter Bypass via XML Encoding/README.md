@@ -1,126 +1,212 @@
-**SQL injection with filter bypass via XML encoding**
+# SQL Injection with Filter Bypass via XML Encoding
 
-**Objective**
+## Lab Overview
 
-The objective of this lab was to exploit a SQL injection vulnerability in the product stock check feature. The application used XML requests to send product and store information. A Web Application Firewall (WAF) was blocking obvious SQL injection payloads, so the goal was to bypass the filter using XML encoding techniques and extract administrator credentials from the database.
+This PortSwigger Web Security Academy lab demonstrates a SQL injection vulnerability in the product stock check functionality.
 
-**Vulnerability Identification**
+The application uses XML requests to communicate with the backend server. A Web Application Firewall (WAF) is implemented to block common SQL injection payloads. However, the filtering mechanism can be bypassed by encoding the SQL payload using XML entities.
 
-**Analyzing the Stock Check Function**
+The vulnerability allows an attacker to perform a UNION-based SQL injection attack, extract sensitive information from the database, and retrieve administrator credentials.
 
-The stock check feature sends a POST request containing XML data:
 
+## Lab Objective / Goal
+
+The goal of this lab is to:
+
+- Identify the SQL injection vulnerability in the stock check feature.
+- Determine how the backend SQL query processes user input.
+- Bypass the WAF protection using XML encoding.
+- Perform a UNION SQL injection attack.
+- Extract administrator credentials from the database.
+- Log in as the administrator user.
+
+---
+
+## Vulnerability Description
+
+The vulnerability exists in the `storeId` parameter of the stock check XML request.
+
+The application directly incorporates user-controlled input into an SQL query without proper validation or parameterization.
+
+Because the application returns database query results in the response, a UNION-based SQL injection attack can be used to retrieve information from other database tables.
+
+---
+
+## Lab Environment
+
+**Platform:** PortSwigger Web Security Academy  
+**Difficulty:** Practitioner  
+**Vulnerability Type:** SQL Injection  
+**Attack Type:** UNION-based SQL Injection  
+**Injection Point:** `storeId` XML parameter
+
+---
+
+## Tools Used
+
+| Tool | Purpose |
+|---|---|
+| Burp Suite Community Edition | Intercepting and modifying HTTP requests |
+| Burp Repeater | Testing SQL injection payloads |
+| Hackvertor Extension | Encoding SQL payloads to bypass WAF |
+| Browser | Accessing the vulnerable application |
+
+---
+
+# Exploitation Steps
+
+## Step 1: Intercepting the Stock Check Request
+
+The stock check feature sends an XML request:
+
+```xml
 <stockCheck>
     <productId>1</productId>
     <storeId>1</storeId>
 </stockCheck>
+```
 
-The storeId parameter was tested for SQL injection.
+The `storeId` parameter was identified as a potential injection point because it is controlled by user input.
 
-To determine whether user input was processed by the backend, mathematical expressions were submitted:
+---
 
+## Step 2: Testing for SQL Injection
+
+A mathematical expression was inserted into the parameter:
+
+```xml
 <storeId>1+1</storeId>
+```
 
-The application returned stock information for a different store, confirming that the input was being evaluated by the database query.
+The application returned a different stock value, confirming that the input was being processed by the backend.
 
-This indicated that the storeId parameter was vulnerable to SQL injection.
+This indicated that the parameter was vulnerable to SQL injection.
 
-**Testing UNION SQL Injection**
+---
 
-The next step was determining the number of columns returned by the original SQL query.
+## Step 3: Testing UNION Injection
 
-A UNION-based payload was tested:
+A UNION query was attempted to identify the number of columns returned by the original SQL query:
 
-1 UNION SELECT NULL
+<img width="975" height="477" alt="image" src="https://github.com/user-attachments/assets/4b789f13-a062-4738-a261-54d4c5849af4" />
 
-Encoded inside the XML request:
 
-<storeId>1 UNION SELECT NULL</storeId>
-<img width="975" height="477" alt="image" src="https://github.com/user-attachments/assets/e288e06f-2cea-40d9-b606-cd5f6d6f8d3b" />
+The request was blocked by the Web Application Firewall (WAF).
 
-However, the request was blocked by the application's WAF.
+The WAF detected SQL keywords such as:
 
-The response indicated that the firewall detected SQL injection keywords such as:
+- UNION
+- SELECT
 
-UNION
-SELECT
-WAF Bypass Using XML Encoding
+---
 
-Because the application accepted XML input, the SQL payload could be obfuscated using XML entities.
+## Step 4: Bypassing the WAF Using Hackvertor
 
-The Hackvertor Burp Suite extension was used to encode the payload.
+Since the application processes XML data, XML entity encoding was used to obfuscate the SQL payload.
 
-After encoding, the WAF no longer detected the malicious keywords.
+Using Burp Suite Hackvertor:
 
-The request was successfully processed, confirming the bypass.
+```
+Extensions → Hackvertor → Encode → hex_entities
+```
 
-Determining Column Count
+The SQL injection payload was converted into XML encoded characters.
 
-Further testing showed that the SQL query returned only one column.
+Example:
+
+Original payload:
+
+```sql
+UNION SELECT NULL
+```
+
+The WAF failed to recognize the malicious SQL keywords, allowing the request to execute.
+
+---
+
+## Step 5: Determining the Number of Columns
+
+Testing showed that the original SQL query returned only one column.
 
 Attempts to return multiple columns caused an error response.
 
-Therefore, the UNION query needed to return a single column.
+Therefore, the UNION query was modified to return a single column.
 
-Extracting User Credentials
+---
 
-Since only one column could be returned, the username and password fields needed to be combined.
+## Step 6: Extracting User Credentials
 
-The database contained a table: users with columns:username , password
+The database contained a `users` table with:
 
-The following SQL query was used:
+- username
+- password
 
-1 UNION SELECT username || '~' || password FROM users
+Because only one column could be returned, both values were concatenated:
 
-The payload was again encoded using Hackvertor before sending it through Burp Repeater.
-
-Retrieving Administrator Credentials
-<img width="975" height="549" alt="image" src="https://github.com/user-attachments/assets/720be836-8943-453b-9976-84b85d62b489" />
+<img width="975" height="549" alt="image" src="https://github.com/user-attachments/assets/8ae8da7f-c016-4c1e-b7c3-430733dc98db" />
 
 
-The response revealed the usernames and passwords stored in the database.
+The response returned stored credentials:
 
-The administrator account credentials were identified:
 
-**Tools Used**
+# Remediation
 
-**Tool	Purpose**
+To prevent SQL injection vulnerabilities:
 
-Burp Suite Repeater	Sending and modifying HTTP requests
-Hackvertor Extension	Encoding SQL injection payloads
-XML Entity Encoding	WAF bypass technique
-PortSwigger Web Security Academy	Vulnerable testing environment
+## 1. Use Parameterized Queries
 
-**Key Takeaways**
-1. Input Validation Is Critical
+Avoid directly inserting user input into SQL queries.
 
-Applications should never directly include user-controlled input in SQL queries.
+Unsafe:
 
-Unsafe example:
+```sql
+SELECT * FROM stock WHERE storeId = 'input'
+```
 
-SELECT * FROM stock WHERE storeId = 'USER_INPUT'
+Secure:
 
-2. Parameterized Queries Prevent SQL Injection
-
-Secure approach:
-
+```sql
 SELECT * FROM stock WHERE storeId = ?
+```
 
-The database treats user input as data instead of executable SQL.
+---
 
-3. WAFs Are Not Complete Security Solutions
+## 2. Validate User Input
 
-A WAF can block common attack patterns, but attackers can bypass filters using:
+Implement strict validation rules for all user-controlled data.
 
-Encoding
-Obfuscation
-Alternative syntax
-Different representations of the same payload
+---
 
-Security must be implemented at the application level.
+## 3. Apply Least Privilege
 
-4. XML Parsing Can Introduce Security Risks
+Database accounts used by applications should have only the permissions they require.
 
-Applications processing XML should carefully validate and sanitize input before using it in database queries.
+---
 
-epth security controls.
+## 4. Do Not Rely Only on WAF Protection
+
+WAFs can help detect attacks but can often be bypassed through:
+
+- Encoding
+- Obfuscation
+- Alternative payload formats
+
+Security controls should be implemented within the application itself.
+
+---
+
+# Key Takeaways
+
+This lab demonstrated:
+
+- How SQL injection vulnerabilities can exist in XML-based applications.
+- How UNION SQL injection can extract database information.
+- How attackers bypass WAF protections using encoding techniques.
+- The importance of secure database interaction using prepared statements.
+
+---
+
+## References
+
+- PortSwigger Web Security Academy - SQL Injection Labs
+- OWASP SQL Injection Prevention Cheat Sheet
