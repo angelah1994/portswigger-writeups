@@ -36,6 +36,7 @@ The purpose of this repository is to:
 | SQL Injection | Blind SQL Injection with Conditional Responses | Apprentice | ✅ Completed |
 | SQL Injection | Blind SQL injection with conditional errors    |  Apprentice | ✅ Completed |
 | SQL Injection | Visible error-based SQL injection    |  Apprentice | ✅ Completed |
+|SQL Injection with Filter Bypass via XML Encoding | Apprentice     | ✅ Completed |
 
 > This table will be updated as I complete additional labs.
 
