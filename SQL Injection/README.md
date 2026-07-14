@@ -25,6 +25,7 @@ These write-ups demonstrate practical techniques for identifying, exploiting, an
 | [Blind SQL Injection with Conditional Responses](Blind%20SQL%20Injection%20with%20Conditional%20Responses/README.md) | Apprentice | ✅ Completed |
 | [Blind SQL Injection with Conditional Errors](Blind%20SQL%20injection%20with%20conditional%20errors/README.md) | Apprentice | ✅ Completed |
 | [Visible Error-Based SQL Injection](Visible%20error-based%20SQL%20injection/README.md) | Apprentice | ✅ Completed |
+| [SQL Injection with Filter Bypass via XML Encoding](SQL%20Injection%20with%20Filter%20Bypass%20via%20XML%20Encoding/README.md) | Practitioner | ✅ Completed |
 
 > More SQL Injection labs will be added as I continue progressing through the PortSwigger Web Security Academy.
 
