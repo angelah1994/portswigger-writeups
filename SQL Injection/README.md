@@ -23,8 +23,8 @@ These write-ups demonstrate practical techniques for identifying, exploiting, an
 | Lab | Difficulty | Status |
 |-----|------------|--------|
 | [Blind SQL Injection with Conditional Responses](Blind%20SQL%20Injection%20with%20Conditional%20Responses/README.md) | Apprentice | ✅ Completed |
-| [Blind SQL Injection with Conditional Errors](Blind%20SQL%20Injection%20with%20Conditional%20Errors/README.md) | Apprentice | ✅ Completed |
-| [Visible Error-Based SQL Injection](Visible%20Error-Based%20SQL%20Injection/README.md) | Apprentice | ✅ Completed |
+| [Blind SQL Injection with Conditional Errors](Blind%20SQL%20injection%20with%20conditional%20errors/README.md) | Apprentice | ✅ Completed |
+| [Visible Error-Based SQL Injection](Visible%20error-based%20SQL%20injection/README.md) | Apprentice | ✅ Completed |
 
 > More SQL Injection labs will be added as I continue progressing through the PortSwigger Web Security Academy.
 
