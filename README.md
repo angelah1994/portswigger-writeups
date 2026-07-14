@@ -34,6 +34,8 @@ The purpose of this repository is to:
 | Category | Lab | Difficulty | Status |
 |----------|-----|------------|--------|
 | SQL Injection | Blind SQL Injection with Conditional Responses | Apprentice | ✅ Completed |
+| SQL Injection | Blind SQL injection with conditional errors    |  Apprentice | ✅ Completed |
+| SQL Injection | Visible error-based SQL injection    |  Apprentice | ✅ Completed |
 
 > This table will be updated as I complete additional labs.
 
